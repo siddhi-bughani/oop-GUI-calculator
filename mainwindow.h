@@ -1,3 +1,4 @@
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -18,6 +19,8 @@ public:
     ~MainWindow() override;
 
 private:
+    void numberClicked();
     Ui::MainWindow *ui;
 };
+
 #endif // MAINWINDOW_H
