@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //connecting buttons to function from 0 to 9
+    //connecting buttons to function numberclicked from 0 to 9
     connect(ui->btn0, &QPushButton::clicked,
             this, &MainWindow::numberClicked);
 
@@ -37,7 +37,32 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->btn9, &QPushButton::clicked,
             this, &MainWindow::numberClicked);
+
+
+//connecting operators to operator clicked function
+
+connect(ui->plus, &QPushButton::clicked,
+        this, &MainWindow::operatorClicked);
+
+connect(ui->minus, &QPushButton::clicked,
+        this, &MainWindow::operatorClicked);
+
+connect(ui->into, &QPushButton::clicked,
+        this, &MainWindow::operatorClicked);
+
+connect(ui->divide, &QPushButton::clicked,
+        this, &MainWindow::operatorClicked);
+
+//connecting decimal functions
+connect(ui->dot, &QPushButton::clicked,
+        this, &MainWindow::decimalClicked);
 }
+
+
+
+
+
+
 
 MainWindow::~MainWindow()
 {
@@ -47,20 +72,95 @@ MainWindow::~MainWindow()
 //making buttons work from 0 to 9
 
 //for the button clicked function in header
+
+//
 void MainWindow::numberClicked()
 {
-    QPushButton *button = qobject_cast<QPushButton *>(sender());
+    QPushButton *button =
+        qobject_cast<QPushButton *>(sender());
+
+    if (!button)
+        return;
 
     QString number = button->text();
-    QString current = ui->display->text();
 
-    if (current == "0")
+    expression += number;
+
+    updateDisplay();
+}
+//operator clicked function
+void MainWindow::operatorClicked()
+{
+    QPushButton *button =
+        qobject_cast<QPushButton *>(sender());
+
+    if (!button)
+        return;
+
+    QString op = button->text();
+
+    if (op == "×")
     {
-        ui->display->setText(number);
+        expression += "*";
+    }
+    else if (op == "÷")
+    {
+        expression += "/";
     }
     else
     {
-        ui->display->setText(current + number);
+        expression += op;
     }
+
+    updateDisplay();
 }
 
+//decimal clicked function to handle the cases like 5.5.6
+
+void MainWindow::decimalClicked()
+{
+    // Find the last number in the expression
+    int lastOperator = -1;
+
+    for (int i = expression.length() - 1; i >= 0; i--)
+    {
+        if (expression[i] == '+' ||
+            expression[i] == '-' ||
+            expression[i] == '*' ||
+            expression[i] == '/')
+        {
+            lastOperator = i;
+            break;
+        }
+    }
+
+    QString currentNumber =
+        expression.mid(lastOperator + 1);
+
+    // Don't allow another decimal point
+    // if the current number already has one
+    if (currentNumber.contains('.'))
+        return;
+
+    // If starting a new number, add 0 first
+    if (currentNumber.isEmpty())
+    {
+        expression += "0";
+    }
+
+    expression += ".";
+
+    updateDisplay();
+}
+
+
+//update display
+void MainWindow::updateDisplay()
+{
+    QString displayExpression = expression;
+
+    displayExpression.replace("*", "×");
+    displayExpression.replace("/", "÷");
+
+    ui->display->setText(displayExpression);
+}
