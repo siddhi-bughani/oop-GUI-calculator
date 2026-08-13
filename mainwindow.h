@@ -34,7 +34,7 @@ private:
     void updateDisplay();//because we are storing operators as *  and/ and not ×5÷3 which are strings
     void calculateResult();//to cal ans
     void clearAll();
-    void percentClicked();
+    void plusMinusClicked();
     void backspaceClicked();
     void squareClicked();
     bool resultDisplayed = false;

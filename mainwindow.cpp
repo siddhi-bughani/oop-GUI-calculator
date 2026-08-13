@@ -67,17 +67,17 @@ connect(ui->equal, &QPushButton::clicked,
 // connecting AC button
 connect(ui->ac, &QPushButton::clicked,
         this, &MainWindow::clearAll);
-// connecting percentage button
-connect(ui->percent, &QPushButton::clicked,
-        this, &MainWindow::percentClicked);
+
 // connecting backspace button
 connect(ui->back, &QPushButton::clicked,
         this, &MainWindow::backspaceClicked);
 //connecting square
 connect(ui->sqr, &QPushButton::clicked,
         this, &MainWindow::squareClicked);
+//+/- functiion
+connect(ui->plusminus, &QPushButton::clicked,
+        this, &MainWindow::plusMinusClicked);
 }
-
 
 
 
@@ -365,44 +365,7 @@ void MainWindow::clearAll()
 }
 
 
-// percentage button
-void MainWindow::percentClicked()
-{
-    if (expression.isEmpty())
-        return;
 
-    // Find the beginning of the current number
-    int lastOperator = -1;
-
-    for (int i = expression.length() - 1; i >= 0; i--)
-    {
-        if (expression[i] == '+' ||
-            expression[i] == '-' ||
-            expression[i] == '*' ||
-            expression[i] == '/')
-        {
-            lastOperator = i;
-            break;
-        }
-    }
-
-    // Get the current number
-    QString currentNumber =
-        expression.mid(lastOperator + 1);
-
-    if (currentNumber.isEmpty())
-        return;
-
-    // Convert it to percentage
-    double number = currentNumber.toDouble();
-    number = number / 100.0;
-
-    // Replace current number with percentage value
-    expression = expression.left(lastOperator + 1)
-                 + QString::number(number);
-
-    updateDisplay();
-}
 // Backspace button
 void MainWindow::backspaceClicked()
 {
@@ -455,7 +418,54 @@ void MainWindow::squareClicked()
 
     updateDisplay();
 }
+// plus minus functiom
+void MainWindow::plusMinusClicked()
+{
+    if (expression.isEmpty())
+        return;
 
+    // Find the beginning of the current number
+    int start = expression.length() - 1;
+
+    while (start >= 0)
+    {
+        QChar ch = expression.at(start);
+
+        if (ch == '+' ||
+            ch == '-' ||
+            ch == '*' ||
+            ch == '/')
+        {
+            break;
+        }
+
+        start--;
+    }
+
+    // Current number starts after the operator
+    int numberStart = start + 1;
+
+    QString currentNumber =
+        expression.mid(numberStart);
+
+    if (currentNumber.isEmpty())
+        return;
+
+    // If current number is already negative,
+    // remove the negative sign.
+    if (numberStart > 0 &&
+        expression.at(numberStart - 1) == '-')
+    {
+        expression.remove(numberStart - 1, 1);
+    }
+    else
+    {
+        // Otherwise add a negative sign
+        expression.insert(numberStart, '-');
+    }
+
+    updateDisplay();
+}
 
 
 //keyboard functions
