@@ -240,8 +240,27 @@ void MainWindow::updateDisplay()
 //calculate result
 void MainWindow::calculateResult()
 {
-    if (expression.isEmpty())
-        return;
+
+        // Nothing to calculate
+        if (expression.isEmpty())
+            return;
+
+        // Don't calculate again if answer is already displayed
+        if (resultDisplayed)
+            return;
+
+        // Don't calculate if the expression ends with an operator
+        QChar lastChar = expression[expression.length() - 1];
+
+        if (lastChar == '+' ||
+            lastChar == '-' ||
+            lastChar == '*' ||
+            lastChar == '/')
+        {
+            return;
+        }
+
+
 
     QStringList numbers;
     QStringList operators;
@@ -438,6 +457,90 @@ void MainWindow::squareClicked()
 }
 
 
+
+//keyboard functions
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_0:
+        ui->btn0->click();
+        break;
+
+    case Qt::Key_1:
+        ui->btn1->click();
+        break;
+
+    case Qt::Key_2:
+        ui->btn2->click();
+        break;
+
+    case Qt::Key_3:
+        ui->btn3->click();
+        break;
+
+    case Qt::Key_4:
+        ui->btn4->click();
+        break;
+
+    case Qt::Key_5:
+        ui->btn5->click();
+        break;
+
+    case Qt::Key_6:
+        ui->btn6->click();
+        break;
+
+    case Qt::Key_7:
+        ui->btn7->click();
+        break;
+
+    case Qt::Key_8:
+        ui->btn8->click();
+        break;
+
+    case Qt::Key_9:
+        ui->btn9->click();
+        break;
+
+    case Qt::Key_Plus:
+        ui->plus->click();
+        break;
+
+    case Qt::Key_Minus:
+        ui->minus->click();
+        break;
+
+    case Qt::Key_Asterisk:
+        ui->into->click();
+        break;
+
+    case Qt::Key_Slash:
+        ui->divide->click();
+        break;
+
+    case Qt::Key_Period:
+        ui->dot->click();
+        break;
+
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        ui->equal->click();
+        break;
+
+    case Qt::Key_Backspace:
+        ui->back->click();
+        break;
+
+    case Qt::Key_Escape:
+        ui->ac->click();
+        break;
+
+    default:
+        QMainWindow::keyPressEvent(event);
+        break;
+    }
+}
 
 
 

@@ -7,6 +7,7 @@
 //, because you're using QString, your mainwindow.h should have access to Qt's string class. QMainWindow generally brings in the necessary Qt infrastructure,
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,6 +22,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
+
+
+protected://Because keyPressEvent() is a Qt event-handler function, and protected is the appropriate access level for it.
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     void numberClicked();//displays when 1to 9 clicked and stores in expression
