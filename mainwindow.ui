@@ -212,7 +212,7 @@ QPushButton:pressed{
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton_20">
+        <widget class="QPushButton" name="sqr">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -240,7 +240,7 @@ QPushButton:pressed{
 </string>
          </property>
          <property name="text">
-          <string>+/-</string>
+          <string>sqr</string>
          </property>
         </widget>
        </item>
@@ -707,7 +707,7 @@ QPushButton:pressed{
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="percent">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>

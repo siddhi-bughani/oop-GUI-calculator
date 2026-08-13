@@ -27,6 +27,12 @@ private:
     void operatorClicked();//displays when operators clicked and stores in expression
     void decimalClicked();//for decimals
     void updateDisplay();//because we are storing operators as *  and/ and not ×5÷3 which are strings
+    void calculateResult();//to cal ans
+    void clearAll();
+    void percentClicked();
+    void backspaceClicked();
+    void squareClicked();
+    bool resultDisplayed = false;
 
     QString expression;//Create a variable capable of storing the expression the user is building.
 
